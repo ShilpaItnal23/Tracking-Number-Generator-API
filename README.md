@@ -45,6 +45,78 @@ curl --location 'http://localhost:9191/next-tracking-number?origin_country_id=MY
     "created_at": "2025-06-12T15:05:58.2602048+05:30"
 }
 
+##Validation Request/Response
+
+1.Blank origin_country_id
+
+http://localhost:9191/next-tracking-number?origin_country_id=&destination_country_id=US&weight=2.5&created_at=2025-06-13T10:00:00+05:30&customer_id=uuid-123&customer_name=Test%20Co&customer_slug=test-co
+
+{
+    "error": "Invalid value for parameter 'created_at': '2025-06-13T10:00:00 05:30'",
+    "message": "Expected format for 'created_at' is ISO 8601 (e.g. 2024-05-04T10:15:30+05:30)",
+    "status": 400
+}
+
+2.Blank destination_country_id
+
+http://localhost:9191/next-tracking-number?origin_country_id=IN&destination_country_id=&weight=2.5&created_at=2025-06-13T10:00:00+05:30&customer_id=uuid-123&customer_name=Test%20Co&customer_slug=test-co
+
+{
+    "error": "Invalid value for parameter 'created_at': '2025-06-13T10:00:00 05:30'",
+    "message": "Expected format for 'created_at' is ISO 8601 (e.g. 2024-05-04T10:15:30+05:30)",
+    "status": 400
+}
+
+3. Negative weight
+
+http://localhost:9191/next-tracking-number?origin_country_id=IN&destination_country_id=US&weight=-1.0&created_at=2025-06-13T10:00:00+05:30&customer_id=uuid-123&customer_name=Test%20Co&customer_slug=test-co
+
+{
+    "error": "Invalid value for parameter 'created_at': '2025-06-13T10:00:00 05:30'",
+    "message": "Expected format for 'created_at' is ISO 8601 (e.g. 2024-05-04T10:15:30+05:30)",
+    "status": 400
+}
+
+4. Blank customer_id
+
+http://localhost:9191/next-tracking-number?origin_country_id=IN&destination_country_id=US&weight=2.5&created_at=2025-06-13T10:00:00+05:30&customer_id=&customer_name=Test%20Co&customer_slug=test-co
+
+{
+    "error": "Invalid value for parameter 'created_at': '2025-06-13T10:00:00 05:30'",
+    "message": "Expected format for 'created_at' is ISO 8601 (e.g. 2024-05-04T10:15:30+05:30)",
+    "status": 400
+}
+
+5.Blank customer_name
+
+http://localhost:9191/next-tracking-number?origin_country_id=IN&destination_country_id=US&weight=2.5&created_at=2025-06-13T10:00:00+05:30&customer_id=uuid-123&customer_name=Test%20Co&customer_slug=
+
+{
+    "error": "Invalid value for parameter 'created_at': '2025-06-13T10:00:00 05:30'",
+    "message": "Expected format for 'created_at' is ISO 8601 (e.g. 2024-05-04T10:15:30+05:30)",
+    "status": 400
+}
+
+6.Blank customer_slug
+
+http://localhost:9191/next-tracking-number?origin_country_id=IN&destination_country_id=US&weight=2.5&created_at=2025-06-13T10:00:00+05:30&customer_id=uuid-123&customer_name=Test%20Co&customer_slug=
+
+{
+    "error": "Invalid value for parameter 'created_at': '2025-06-13T10:00:00 05:30'",
+    "message": "Expected format for 'created_at' is ISO 8601 (e.g. 2024-05-04T10:15:30+05:30)",
+    "status": 400
+}
+
+7.Missing created_at entirely
+
+http://localhost:9191/next-tracking-number?origin_country_id=&destination_country_id=&weight=-5&created_at=2025-06-13T10:00:00+05:30&customer_id=&customer_name=&customer_slug=
+
+{
+    "error": "Invalid value for parameter 'created_at': '2025-06-13T10:00:00 05:30'",
+    "message": "Expected format for 'created_at' is ISO 8601 (e.g. 2024-05-04T10:15:30+05:30)",
+    "status": 400
+}
+
 
 
 
